@@ -383,32 +383,14 @@ function createModel()
                         url: Url,
                         type: 'get',
                         dataType: 'json',
-                        //     $arr[]= array(
-                        //     'time' => $time,//时间 o
-                        //     'count' => $count,//点赞数 o
-                        //     'id' => $id,//图集的id o
-                        //     'my_nickname' => $my_nickname,//微信名称 o
-                        //     'my_headimg_url' => $my_headimg_url,//微信头像地址 o
-                        //     'description' => $describe,//描述 o
-                        //     'image'=>$res,//数组形式的图片信息 里面每条元素代表一张图片 o
-                        //     'image_num'=>$picture_count,//图片数量 o
-                        //     'is_like'=>$is_like,//这个用户是否点赞 o!!!!!!!!!!
-                        // );
                         success: function (data) {
-                            console.log(data)
                             if(!data.data){
                                 return false
                             }
                             max=data.data[(data.data.length-1)].id;
-                    // var i=0;
-                    for(var i=0;i<data.data.length;i++){
-                            // i=m;/
+                            for(var i=0;i<data.data.length;i++){
                             console.log('i');
                             $('#' + data.data[i].id + '.row.u-showDiv').remove();
-                            // (function t(i){
-
-                            // var a = $("<div class='row u-showDiv'></div>").load("/addons/picturewall/template/mobile/load.html",function(){
-                                // console.log(i)
                                 $("body").append("<div class='row u-showDiv' id='"+data.data[i].id+"'>"+load_tpl+"</div>");
                                 var flag = data.data[i]['is_like'];
                                 // a.attr('id', );
@@ -425,8 +407,11 @@ function createModel()
                                 // alert(data.data[0].count);
                                 window.flag = data.data[i].is_like;
                                 $('#' + data.data[i].id + ' .card-image img').remove();
+                                $('#' + data.data[i].id + ' .critical').on('click',function(event){
+                                    event.stopPropagation();
+                                    $('#criInput').css('display','block');
+                                });
 
-                                /*$('#' + data.data[i].id + ' .card-image').append('<img src="' + data.data[i].image[0]['path'] + '" alt="毕业照" class="responsive-img first"/>');*/
                                 getLike();
                                 for (var j = 0; j < data.data[i].image_num; j++) {
                                     $('#' + data.data[i].id + ' .card-image').append('<img src="' + data.data[i].image[j]['path'] + '" alt="毕业照" class="responsive-img hide"/>');
@@ -447,13 +432,6 @@ function createModel()
                             console.log(a + ' ' + b + ' ' + c);
                         }
                     });
-        // }
-        // else
-        // {
-            // imageFlag=false;
-            // break;
-        // }
-    // }
     window.page++;
     }
 }
@@ -461,9 +439,6 @@ function createModel()
 function loadingHot(){
 
     $('.u-showDiv').remove();
-    /*$('.card-image img.first').each(function(){
-        $(this).off('click')
-    })*/
 type='hot';
     $('*').off();
      page=1; //加载页数
@@ -472,18 +447,12 @@ type='hot';
     preLoading();
     loading();
     clickImg();
-    // imgNum();
     btnChange();
     changeLike();
     backTop();
     scrollLoading();
 
 }
-//
-// function remove_repeat(obj1,ary){
-//
-// }
-
 //    加载最新
 function loadingLatest(){
     $(".u-showDiv").remove();
@@ -551,12 +520,43 @@ $.ajax({
                             $('#' + data.data[i].id + ' .u-thumbBtn').attr('id',data.data[i].id);
                             $('#' + data.data[i].id + ' .u-thumbBtn').attr('flag',data.data[i].is_like);
                             $('#' + data.data[i].id + ' .img-description').text(data.data[i].description);
+                            $('#' + data.data[i].id + ' .critical').on('click',function(event){
+                                    event.stopPropagation();
+                                    $('#criInput').css('display','block');
+                                    $('#criText').focus();
+                                    var that=$(this);
+                                    $('#criSub').one('click',function(event){
+                                        event.stopPropagation();
+                                        var criVal=$(this).prev().find('input').val();
+                                        var tpl='姓名:'+criVal;
+                                        var Item=$('<div class="criItem"></div>').html(tpl);
+                                        
+                                        $.ajax({
+                                            url: 'http://wq.yangge.ac.cn/app/index.php?i=2&c=entry&do=comment&m=picturewall',
+                                            type:"POST",
+                                            dataType:"json",
+                                            data:{
+                                                'openid':window.openid, 
+                                                'id':$(this).id,
+                                                'comment':tpl
+                                            },
+                                            success:function(data)
+                                            {
+                                                alert('评论成功');
+                                                that.parent().next().append(Item);
+                                            },
+                                            error:function(a,b,c)
+                                            {
+                                              console.log(a+b+c);
+                                              alert('评论失败，请重试');
+                                            }
+                                          });
+                                    });
+                            });
                             // alert(data.data[0].count);
                             window.flag=data.data[i].is_like;
                             getLike();
                             $('#' + data.data[i].id + ' .card-image img').remove();
-                            // $('#'+data.data[i].id).find(' .card-image').append('<img src="'+data.data[0].image[0]['path']+ '"alt="毕业照" class="responsive-img first"/>');
-                            // console.log(data.data[i].image[0]['path'])
                             for(var j= 0;j<data.data[i].image_num;j++)
                             {
                                     $('#' + data.data[i].id + ' .card-image').append('<img src="' + data.data[i].image[j]['path'] + '" alt="毕业照" class="responsive-img hide"/>');
@@ -564,9 +564,6 @@ $.ajax({
                                          $('#' + data.data[i].id + ' .card-image img').removeClass('hide').addClass('first')
                                     }
                             }
-                            // str2=str2+data.data[i].id+":"+data.data[i].count+"--";
-                        // });
-                        // })(i)
 
                         }
                         // alert(str2);
@@ -616,3 +613,8 @@ preLoading();
     scrollLoading('hot');
 
 })*/
+$(document).on('click',function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        $('#criInput').css('display','none');
+    });
