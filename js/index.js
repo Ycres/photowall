@@ -653,7 +653,6 @@ $(document).on('click',function(event){
     event.stopPropagation();
     event.preventDefault();
     $('#criInput').css('display','none');
-    return false;
 });
 $('#criInput').on('click',function(event){
     event.stopPropagation();
