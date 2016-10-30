@@ -15,14 +15,11 @@ var load_tpl = '<div class="col s12 m12">\
             <p></p>\
         </div>\
         <div class="criIcon">\
-            <span class="criNum">评论数(100)</span>\
+            <span class="criNum"></span>\
             <i class="mdi-communication-textsms critical"></i>\
         </div>\
         <div class="criArea">\
-        <span>显示全部评论</span>\
-        <div class="criItem">姓名:jlskjfal;jgslkgjs看过dkfjal;dkfjal;sdkfjeoinflsfjelirjjfdslakfja;lekjfieojrewasdfasfadfasdfasdfasdfasdfa</div>\
-        <div class="criItem">姓名:jlskjfal;jgslkgjs看过dkfjal;dkfjal;sdkfjeoinflsfjelirjjfdslakfja;lekjfieojrewasdfasfadfasdfasdfasdfasdfa</div>\
-        </div>\
+        <span class="criShow">显示全部评论</span>\
     </div>\
 </div>\
 <div class="slide-box">\
@@ -402,10 +399,35 @@ function createModel()
                                 $('#' + data.data[i].id + ' .u-thumbBtn').attr('id',data.data[i].id);
                                 $('#' + data.data[i].id + ' .u-thumbBtn').attr('flag',data.data[i].is_like);
                                 $('#' + data.data[i].id + ' .img-description').text(data.data[i].description);
-                                // $('#' + data.data[0].id + ' .u-thumbBtn').attr('flag',data.data[0].is_like);
-                                // alert(data.data[0].count);
+                                $('#' + data.data[i].id + ' .criNum').text('评论数('+data.data[i].comment.length+')');
                                 window.flag = data.data[i].is_like;
                                 $('#' + data.data[i].id + ' .card-image img').remove();
+                                console.log(data.data[i].comment.length);
+
+                                if(data.data[i].comment.length<=2)
+                            {
+                                $('#' + data.data[i].id + ' .criShow').remove();
+                                for(key in data.data[i].comment)
+                                {
+                                    $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[key]+'</div>');
+                                }
+
+                            }
+                            else
+                            {
+                                for(var j=0;j<2;j++)
+                                {
+                                    $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[j]+'</div>');
+                                }
+                            }
+                            $('#' + data.data[i].id + ' .criShow').on('click',function(){
+                                for(var j=2;j<data.data[i].comment.length;j++)
+                                {
+                                    $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[j]+'</div>');
+                                }
+                                $(this).css('display','none');
+                            });      
+
                                 $('#' + data.data[i].id + ' .critical').on('click',function(event){
                                     event.stopPropagation();
                                     $('#criInput').css('display','block');
@@ -413,6 +435,7 @@ function createModel()
                                     var that=$(this);
                                     $('#criSub').one('click',function(event){
                                         event.stopPropagation();
+                                        event.preventDefault();
                                         var criVal=$(this).prev().find('input').val();
                                         var tpl='姓名:'+criVal;
                                         var Item=$('<div class="criItem"></div>').html(tpl);
@@ -437,6 +460,7 @@ function createModel()
                                             }
                                           });
                                     });
+                                    return false;
                             });
 
                                 getLike();
@@ -531,13 +555,8 @@ $.ajax({
                         for(var i = 0;i<data.data.length;i++){
 
                             $('#' + data.data[i].id + '.row.u-showDiv').remove();
-
-
                             $("body").append("<div class='row u-showDiv' id='"+data.data[i].id+"'>"+load_tpl+"</div>");
-
-                            // console.log(data.data[0]);
                             var flag=data.data[i].is_like;
-                            // a.attr('id',data.data[i].id);
                             $('#'+data.data[i].id+' #headimg').attr('src',data.data[i].my_headimg_url);
                             $('#'+data.data[i].id+' .title').text(data.data[i].my_nickname);//
                             $('#'+data.data[i].id+' .time').text(data.data[i].time);
@@ -547,8 +566,30 @@ $.ajax({
                             $('#' + data.data[i].id + ' .u-thumbBtn').attr('id',data.data[i].id);
                             $('#' + data.data[i].id + ' .u-thumbBtn').attr('flag',data.data[i].is_like);
                             $('#' + data.data[i].id + ' .img-description').text(data.data[i].description);
+                            $('#' + data.data[i].id + ' .criNum').text('评论数('+data.data[i].comment.length+')');
+                            if(data.data[i].comment.length<=2)
+                            {
+                                $('#' + data.data[i].id + ' .criShow').remove();
+                                for(key in data.data[i].comment)
+                                {
+                                    $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[key]+'</div>');
+                                }
+
+                            }
+                            else
+                            {
+                                for(var j=0;j<2;j++)
+                                {
+                                    $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[j]+'</div>');
+                                }
+                            }
+
+                            
+
+
                             $('#' + data.data[i].id + ' .critical').on('click',function(event){
                                     event.stopPropagation();
+                                    event.preventDefault();
                                     $('#criInput').css('display','block');
                                     $('#criText').focus();
                                     var that=$(this);
@@ -608,10 +649,13 @@ $(document).ready(function(){
     changeLike();
     backTop();
     scrollLoading();
-});
 $(document).on('click',function(event){
     event.stopPropagation();
     event.preventDefault();
     $('#criInput').css('display','none');
     return false;
+});
+$('#criInput').on('click',function(event){
+    event.stopPropagation();
+})
 });
