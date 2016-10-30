@@ -246,7 +246,6 @@ function changeLike() {
         }
 //                未点赞
         else if ($(this).attr('flag') == 1) {
-
             timer=null;
             var _this=$(this);
             timer = setTimeout(function () {
@@ -410,7 +409,35 @@ function createModel()
                                 $('#' + data.data[i].id + ' .critical').on('click',function(event){
                                     event.stopPropagation();
                                     $('#criInput').css('display','block');
-                                });
+                                    $('#criText').focus();
+                                    var that=$(this);
+                                    $('#criSub').one('click',function(event){
+                                        event.stopPropagation();
+                                        var criVal=$(this).prev().find('input').val();
+                                        var tpl='姓名:'+criVal;
+                                        var Item=$('<div class="criItem"></div>').html(tpl);
+                                        $.ajax({
+                                            url: 'http://wq.yangge.ac.cn/app/index.php?i=2&c=entry&do=comment&m=picturewall',
+                                            type:"POST",
+                                            dataType:"json",
+                                            data:{
+                                                'openid':window.openid, 
+                                                'id':$(this).id,
+                                                'comment':tpl
+                                            },
+                                            success:function(data)
+                                            {
+                                                alert('评论成功');
+                                                that.parent().next().append(Item);
+                                            },
+                                            error:function(a,b,c)
+                                            {
+                                              console.log(a+b+c);
+                                              alert('评论失败，请重试');
+                                            }
+                                          });
+                                    });
+                            });
 
                                 getLike();
                                 for (var j = 0; j < data.data[i].image_num; j++) {
@@ -530,7 +557,6 @@ $.ajax({
                                         var criVal=$(this).prev().find('input').val();
                                         var tpl='姓名:'+criVal;
                                         var Item=$('<div class="criItem"></div>').html(tpl);
-                                        
                                         $.ajax({
                                             url: 'http://wq.yangge.ac.cn/app/index.php?i=2&c=entry&do=comment&m=picturewall',
                                             type:"POST",
@@ -566,31 +592,15 @@ $.ajax({
                             }
 
                         }
-                        // alert(str2);
-//                     alert(data);
                     },
                     error:function(a,b,c){
-                        console.log(a+' '+b+' '+c);
+                        console.log(a+b+c);
                     }
                 });
-                // if(i+1>=imageSum) break;
-    // }
-
 }
-
-
 $(document).ready(function(){
-
     type='latest';
-
-/*$('html').on('touchstart',function(e){
-    if(e.target.tagName=='BODY'){
-        e.preventDefault();
-    }
-})*/
-
-   /*loadingHot();*/
-preLoading();
+    preLoading();
     loading();
     clickImg();
     getLike();
@@ -598,23 +608,10 @@ preLoading();
     changeLike();
     backTop();
     scrollLoading();
-
 });
-
-/*$(function(){
-     $('.u-showDiv').remove();
-    preLoading('hot');
-    loading();
-    clickImg();
-    getLike();
-    btnChange();
-    changeLike();
-    backTop();
-    scrollLoading('hot');
-
-})*/
 $(document).on('click',function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        $('#criInput').css('display','none');
-    });
+    event.stopPropagation();
+    event.preventDefault();
+    $('#criInput').css('display','none');
+    return false;
+});
