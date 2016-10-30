@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>首页</title>
+    <!--<link rel="stylesheet" m2 href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="materialize/css/material-icons.css" media="screen,projection"/>
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/swipeSlide.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+    body
+    {
+        height: 100%;
+        color: #777;
+    }
+    .showItem
+    {
+        color: black;
+    }
+    .content
+    {
+        padding-top:15px;
+    }
+    .header
+    {
+        height: 30px;  
+        border:1px solid black;  
+        position: relative;
+    }
+    .header img
+    {
+        width: 100%;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        top:0;
+    }
+    nav .row
+    {
+        height: 100%;
+    }
+    nav .row img
+    {
+        height: 80%;
+        position: absolute;
+        left: 10px;
+        top: 10%;
+    }
+    .tabs .tab a
+    {
+        background: #ee6e73;
+        color: white;
+        font-size: 16px;
+    }
+    #criInput
+    {
+        display: none;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        margin:0;
+        background-color: white;
+    }
+    #criSub
+    {
+        position: fixed;
+        bottom: 0;
+    }
+    #criText
+    {
+        margin-bottom: 0;
+    }
+    .criIcon
+    {
+        border-top: 1px solid #ccc;
+        display: block;
+        vertical-align: baseline;
+        padding:0 20px 0 20px;
+    }
+    .critical
+    {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        color: #ee6e73;
+        display: inline-block;
+        vertical-align: top;
+        float: right;
+    }
+    .criNum
+    {
+        font-size: 15px;
+        color: #777;
+        vertical-align: baseline;
+    }
+    .criArea
+    {
+        padding: 0 20px;
+    }
+    .criArea span
+    {
+        margin:8px 0;
+    }
+    .criArea span:hover
+    {
+        color: black;
+        text-decoration: underline;
+    }
+    .criArea span:active
+    {
+        color: black;
+        text-decoration: underline;
+    }
+    .criArea span:link
+    {
+        color:black;
+        text-decoration: underline;
+    }
+    .criItem
+    {
+        word-break:keep-all;
+        white-space:normal;
+        word-wrap:break-word;
+        margin-bottom: 6px;
+    }
+    </style>
+</head>
+<body>
+<!--顶部按钮-->
+<nav>
+    <div class="nav-wrapper">
+        <div class="row">
+            <img src="img/1.jpg" alt="头像" class="circle responsive-img">
+            <div class="col s6 offset-s3">
+                <ul class="tabs">
+                    <li class="tab col s2"><a href="#" id="hot-btn">热门</a></li>
+                    <li class="tab col s2"><a class="active" href="#" id="latest-btn">最新</a></li>
+                </ul>
+            </div>
+        </div>
+      
+    </div>
+</nav>
+<!--照片展示块1-->
+<div class="row u-showDiv">
+    <div class="col s12 m12">
+        <div class="card">
+            <ul class="collection">
+                <li class="collection-item avatar">
+                    <img src="{$my_headimg_url}" alt="头像" class="headImg circle responsive-img materialboxed"/>
+                    <span class="title">夏天</span>
+                    <span class="time">2016.5.3    14:00</span>
+                    <a  class="u-thumbBtn" tabindex="0" flag="1" id=""><i class="mdi-action-favorite-outline"><span>121</span></i></a>
+                </li>
+            </ul>
+            <div class="card-image">
+                <img src="img/1.jpg" alt="毕业照" class="responsive-img first"/>
+                <img src="img/1.jpg" alt="毕业照" class="responsive-img hide"/>
+                <img src="img/1.jpg" alt="毕业照" class="responsive-img hide"/>
+                <img src="img/1.jpg" alt="毕业照" class="responsive-img hide"/>
+                <span class="imgNum"><span id="imgNums"></span>4</span>
+            </div>
+            <div class="card-content">
+                <p>照的毕业照这是我的毕业照毕业照这是我的毕业照的毕业照这是我的毕业照的毕业照这是我的毕业照</p>
+            </div>
+            <div class="criIcon">
+                <span class="criNum">评论数(100)</span>
+                <i class="mdi-communication-textsms critical"></i>
+            </div>
+            <div class="criArea">
+                <span>显示全部评论</span>
+                <div class="criItem">
+                    姓名:jlskjfal;jgslkgjs看过dkfjal;dkfjal;sdkfjeoinflsfjelirjjfdslakfja;lekjfieojrewasdfasfadfasdfasdfasdfasdfa
+                </div>
+                <div class="criItem">
+                    姓名:jlskjfal;jgslkgjs看过dkfjal;dkfjal;sdkfjeoinflsfjelirjjfdslakfja;lekjfieojrewasdfasfadfasdfasdfasdfasdfa
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--点击图片后单独滑动查看-->
+    <div class="slide-box">
+        <span class="close-btn"><i class="mdi-navigation-close"></i></span>
+        <div class="num-box">
+            <span class="num"></span>/<span class="sum"></span>
+        </div>
+    </div>
+</div>
+<!-- 底部导航 -->
+<div class="row"  id="criInput">
+   <div class="input-field col s10" >
+        <i class="mdi-content-send prefix"></i>
+        <input  type="text" class="validate" id="criText">
+        <label for="name">评论</label>
+    </div> 
+    <button class="btn col s2" id="criSub">提交</button>
+</div>
+<script>
+$(document).ready(function(){
+    $('ul.tabs').tabs();
+    $('.critical').on('click',function(){
+        event.stopPropagation();
+        $('#criInput').css('display','block');
+        $('#criText').focus();
+        var that=$(this);
+        $('#criSub').one('click',function(){
+            event.stopPropagation();
+            var criVal=$(this).prev().find('input').val();
+            var tpl='姓名:'+criVal;
+            var Item=$('<div class="criItem"></div>').html(tpl);
+            
+            $.ajax({
+                url: 'http://wq.yangge.ac.cn/app/index.php?i=2&c=entry&do=comment&m=picturewall',
+                type:"POST",
+                dataType:"json",
+                data:{
+                    'openid':window.openid, 
+                    'id':$(this).id,
+                    'comment':tpl
+                },
+                success:function(data)
+                {
+                    alert('评论成功');
+                    that.parent().next().append(Item);
+                },
+                error:function(a,b,c)
+                {
+                  console.log(a+b+c);
+                  alert('评论失败，请重试');
+                }
+              });
+        });
+    });
+    $(document).on('click',function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        $('#criInput').css('display','none');
+    });
+
+});
+</script>
+</body>
+</html>

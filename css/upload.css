@@ -1,0 +1,28 @@
+#pickfiles
+{
+	border: 0;
+}
+#container span
+{
+	width: 100%;
+	height: 0;
+	
+	color: white;
+	border-bottom: 1px solid #9e9e9e;
+	display: block;
+}
+#header-pre
+{
+	border-radius: 50%;
+	margin-left: calc(50% - 100px);
+	margin-bottom: 10px;
+	width: 200px;
+	height: 200px;
+	border:1px solid #9e9e9e;
+}
+#header-pre img
+{
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
