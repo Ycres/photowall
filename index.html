@@ -80,7 +80,7 @@
     }
     .criIcon
     {
-        border-top: 1px solid #ccc;
+        border-top: 1px dotted #ccc;
         display: block;
         vertical-align: baseline;
         padding:0 20px 0 20px;
@@ -207,7 +207,7 @@
 $(document).ready(function(){
     $('ul.tabs').tabs();
     $('.critical').on('click',function(){
-        event.stopPropagation();
+        // event.stopPropagation();
         $('#criInput').css('display','block');
         $('#criText').focus();
         var that=$(this);
