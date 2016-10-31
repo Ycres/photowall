@@ -74,8 +74,6 @@ function loading() {
         });
 
     }
-
-
     function change1(){
         $('#hot-btn').removeClass('s-blue-font');
         $('#hot-btn').addClass('light-blue');
@@ -317,12 +315,6 @@ function backTop(){
 function scrollLoading(){
     // type=type;
     $(window).on('scroll',function(){
-//            var displayBlockHeight=$('.u-showDiv').length*$('.u-showDiv').height();
-//            console.log('length:'+$('.u-showDiv').length+' height:'+$('.u-showDiv').height()+' displayHeight:'+displayBlockHeight);
-//            console.log('window.scrollTop:'+$(window).scrollTop());
-//            console.log('windowHeight:'+$(window).height());
-//            console.log('documentHeight:'+$(document).height());
-        // console.log($('.u-loadingDiv').length);
         if ($(window).scrollTop() >= $(document).height() - $(window).height()&&$('.u-loadingDiv').length==0) {
             // alert('我最帅')
             $('body').append('\
@@ -427,7 +419,7 @@ function createModel()
                                 }
                                 $(this).css('display','none');
                             });      
-
+                                var id=data.data[i].id;
                                 $('#' + data.data[i].id + ' .critical').on('click',function(event){
                                     event.stopPropagation();
                                     $('#criInput').css('display','block');
@@ -445,7 +437,7 @@ function createModel()
                                             dataType:"json",
                                             data:{
                                                 'openid':window.openid, 
-                                                'id':$(this).id,
+                                                'id': id,
                                                 'comment':tpl
                                             },
                                             success:function(data)
@@ -583,10 +575,7 @@ $.ajax({
                                     $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[j]+'</div>');
                                 }
                             }
-
-                            
-
-
+                            id=data.data[i].id;
                             $('#' + data.data[i].id + ' .critical').on('click',function(event){
                                     event.stopPropagation();
                                     event.preventDefault();
@@ -604,7 +593,7 @@ $.ajax({
                                             dataType:"json",
                                             data:{
                                                 'openid':window.openid, 
-                                                'id':$(this).id,
+                                                'id': id,
                                                 'comment':tpl
                                             },
                                             success:function(data)
