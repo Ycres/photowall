@@ -56,45 +56,21 @@ function loading() {
 }
 //    热门和最新按钮切换
     function btnChange(){
-        $('#hot-btn').click(function() {
-            if ($('#hot-btn').hasClass('s-blue-font')) {
-                change1();
+        $('#hot-btn').on('click',function() {
                 max=0;//无数大
                 loadingHot();
-            }
 
         });
-        $('#latest-btn').click(function () {
-            if ($('#latest-btn').hasClass('s-blue-font')) {
-                change2()
+        $('#latest-btn').on('click',function () {
                 max=0;//无数大
                 loadingLatest();
-            }
-
         });
-
-    }
-    function change1(){
-        $('#hot-btn').removeClass('s-blue-font');
-        $('#hot-btn').addClass('light-blue');
-        $('#latest-btn').removeClass('light-blue');
-        $('#latest-btn').addClass('s-blue-font');
-    }
-
-    function change2(){
-        $('#latest-btn').removeClass('s-blue-font');
-        $('#latest-btn').addClass('light-blue');
-        $('#hot-btn').removeClass('light-blue');
-        $('#hot-btn').addClass('s-blue-font');
     }
 
 //    点击后滑动查看所有图片
 function clickImg(){
 
     $('body').on('click','img.first',function(e){
-
-
-        // alert('你好啊')
         var $this = $(this);
         var _result = '';
 
@@ -103,7 +79,6 @@ function clickImg(){
         _result += '<div class="slide"><ul>';
         $this.parents('.card-image').find('img').each(function(i){
             var _src = $(this).attr('src');
-//                _result += '<li><img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-src="' + _src.substring(0,_src.lastIndexOf('_')) + '_640x640.jpg"></li>';
             _result+='<li><img src="'+_src+'"/></li>';
         });
         _result += '</ul></div>';
@@ -496,8 +471,11 @@ function createModel()
 function loadingHot(){
 
     $('.u-showDiv').remove();
-type='hot';
-    $('*').off();
+    type='hot';
+    $('.card-image img.first').each(function(){
+        $(this).off()
+    });
+    // $('*').off();
      page=1; //加载页数
      imageSum=1;//总图集数量
      imageFlag=true;
@@ -513,11 +491,11 @@ type='hot';
 //    加载最新
 function loadingLatest(){
     $(".u-showDiv").remove();
-    /*$('.card-image img.first').each(function(){
+    $('.card-image img.first').each(function(){
         $(this).off()
-    })*/
+    });
 type='latest';
-$('*').off();
+// $('*').off();
     page=1; //加载页数
     imageSum=1;//总图集数量
     imageFlag=true;
