@@ -389,29 +389,40 @@ function createModel()
                                 $('#' + data.data[i].id + ' .card-content p').text(data.data[i].description);
                                 $('#' + data.data[i].id + ' .u-thumbBtn span').text(data.data[i]['count']);
                                 $('#' + data.data[i].id + ' .u-thumbBtn').attr('id',data.data[i].id);
+                                $('#' + data.data[i].id + ' .criArea').attr('commentNum',data.data[i].comment.length);
                                 $('#' + data.data[i].id + ' .u-thumbBtn').attr('flag',data.data[i].is_like);
                                 $('#' + data.data[i].id + ' .img-description').text(data.data[i].description);
                                 $('#' + data.data[i].id + ' .criNum').text('评论数('+data.data[i].comment.length+')');
                                 window.flag = data.data[i].is_like;
                                 $('#' + data.data[i].id + ' .card-image img').remove();
-                                console.log(data.data[i].comment.length);
 
-                                if(data.data[i].comment.length<=2)
-                            {
-                                $('#' + data.data[i].id + ' .criShow').remove();
-                                for(key in data.data[i].comment)
+
+                                for(key in data.data[i].comment)//添加评论
                                 {
                                     $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[key]+'</div>');
                                 }
-
-                            }
-                            else
-                            {
-                                for(var j=0;j<2;j++)
+                                if(data.data[i].comment.length<=2)
                                 {
-                                    $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[j]+'</div>');
+                                    $('#' + data.data[i].id + ' .criShow').remove();
                                 }
-                            }
+                                else
+                                {
+                                    for(var j=2;j<data.data[i].comment.length;j++)
+                                    {
+                                        $('#' + data.data[i].id + ' .criItem').eq(j).css('display','none');
+                                    }
+                                    $('#' + data.data[i].id + ' .criShow').one('click',function(){
+                                        console.log('commentNum'+$(this).parent().attr('commentNum'));
+                                        for(var j=2;j<$(this).parent().attr('commentNum');j++)
+                                        {
+                                            $(this).parent().find('.criItem').eq(j).css('display','block');
+                                        }
+                                        $(this).css('display','none');
+                                    });
+                                }
+
+
+
                             $('#' + data.data[i].id + ' .criShow').on('click',function(){
                                 for(var j=2;j<data.data[i].comment.length;j++)
                                 {
@@ -419,12 +430,14 @@ function createModel()
                                 }
                                 $(this).css('display','none');
                             });      
-                                var id=data.data[i].id;
                                 $('#' + data.data[i].id + ' .critical').on('click',function(event){
                                     event.stopPropagation();
                                     $('#criInput').css('display','block');
                                     $('#criText').focus();
                                     var that=$(this);
+                                    console.log($(this).parent().parent().parent());
+                                    var id=$(this).parent().parent().parent().parent().attr('id');
+                                    var commentNum = $(this).parent().next().attr('commentNum');
                                     $('#criSub').one('click',function(event){
                                         event.stopPropagation();
                                         event.preventDefault();
@@ -442,7 +455,8 @@ function createModel()
                                             },
                                             success:function(data)
                                             {
-                                                alert('评论成功');
+                                                commentNum++;
+                                                that.prev().html('评论数('+commentNum+')')
                                                 that.parent().next().append(Item);
                                             },
                                             error:function(a,b,c)
@@ -533,7 +547,7 @@ $.ajax({
     }
 });
 
-        var Url="http://wq.yangge.ac.cn/app/index.php?i=2&c=entry&do=show&m=picturewall"+"&type="+type+"&page=0&page_num="+"5"+"&max="+max;
+        var Url="http://wq.yangge.ac.cn/app/index.php?i=2&c=entry&do=show&m=picturewall"+"&type="+type+"&page=0&page_num="+"5"+"&max="+max+"&openid="+window.openid;
         $.ajax(
                 {
                     url:Url,
@@ -557,35 +571,46 @@ $.ajax({
                             $('#'+data.data[i].id+' .u-thumbBtn span').text(data.data[i].count);
                             $('#' + data.data[i].id + ' .u-thumbBtn').attr('id',data.data[i].id);
                             $('#' + data.data[i].id + ' .u-thumbBtn').attr('flag',data.data[i].is_like);
+                             $('#' + data.data[i].id + ' .criArea').attr('commentNum',data.data[i].comment.length);
                             $('#' + data.data[i].id + ' .img-description').text(data.data[i].description);
                             $('#' + data.data[i].id + ' .criNum').text('评论数('+data.data[i].comment.length+')');
-                            if(data.data[i].comment.length<=2)
-                            {
-                                $('#' + data.data[i].id + ' .criShow').remove();
-                                for(key in data.data[i].comment)
+                            var commentNum=data.data[i].comment.length;
+                             for(key in data.data[i].comment)//添加评论
                                 {
                                     $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[key]+'</div>');
                                 }
-
-                            }
-                            else
-                            {
-                                for(var j=0;j<2;j++)
+                                if(data.data[i].comment.length<=2)
                                 {
-                                    $('#' + data.data[i].id + ' .criArea').append('<div class="criItem">'+data.data[i].comment[j]+'</div>');
+                                    $('#' + data.data[i].id + ' .criShow').remove();
                                 }
-                            }
-                            id=data.data[i].id;
+                                else
+                                {
+                                    for(var j=2;j<data.data[i].comment.length;j++)
+                                    {
+                                        $('#' + data.data[i].id + ' .criItem').eq(j).css('display','none');
+                                    }
+                                    $('#' + data.data[i].id + ' .criShow').one('click',function(){
+                                        console.log('commentNum'+$(this).parent().attr('commentNum'));
+                                        for(var j=2;j<$(this).parent().attr('commentNum');j++)
+                                        {
+                                            $(this).parent().find('.criItem').eq(j).css('display','block');
+                                        }
+                                        $(this).css('display','none');
+                                    });
+                                }
                             $('#' + data.data[i].id + ' .critical').on('click',function(event){
                                     event.stopPropagation();
                                     event.preventDefault();
                                     $('#criInput').css('display','block');
                                     $('#criText').focus();
                                     var that=$(this);
+                                    var id=$(this).parent().parent().parent().parent().attr('id');
+                                    var commentNum = $(this).parent().next().attr('commentNum');
+								
                                     $('#criSub').one('click',function(event){
                                         event.stopPropagation();
                                         var criVal=$(this).prev().find('input').val();
-                                        var tpl='姓名:'+criVal;
+                                        var tpl=criVal;
                                         var Item=$('<div class="criItem"></div>').html(tpl);
                                         $.ajax({
                                             url: 'http://wq.yangge.ac.cn/app/index.php?i=2&c=entry&do=comment&m=picturewall',
@@ -593,13 +618,15 @@ $.ajax({
                                             dataType:"json",
                                             data:{
                                                 'openid':window.openid, 
-                                                'id': id,
+                                                'id':id,
                                                 'comment':tpl
                                             },
                                             success:function(data)
                                             {
-                                                alert('评论成功');
+                                                commentNum++;
+                                                that.prev().html('评论数('+commentNum+')')
                                                 that.parent().next().append(Item);
+                                                
                                             },
                                             error:function(a,b,c)
                                             {

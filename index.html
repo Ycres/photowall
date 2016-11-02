@@ -142,7 +142,7 @@
 <nav>
     <div class="nav-wrapper">
         <div class="row">
-            <img src="img/1.jpg" alt="头像" class="circle responsive-img">
+            <img src="{$my_headimg_url}" alt="头像" class="circle responsive-img">
             <div class="col s6 offset-s3">
                 <ul class="tabs">
                     <li class="tab col s2"><a href="#" id="hot-btn">热门</a></li>
@@ -208,13 +208,15 @@
     <button class="btn col s2" id="criSub">提交</button>
 </div>
 <!-- 底部按钮 -->
-  <div class="fixed-action-btn" style="bottom: 20px; right:20px;">
+  <div class="fixed-action-btn" style="bottom: 20px; right:20px;" id="addButton">
      <a class="btn-floating btn-large waves-effect waves-light #ee6e73"><i class="mdi-content-add"></i></a>
-    </a>
   </div>
 <script>
 $(document).ready(function(){
     $('ul.tabs').tabs();
+    $('#addButton').on('click',function(){
+        window.location="http://www.baidu.com";
+    });
 });
 </script>
 </body>
